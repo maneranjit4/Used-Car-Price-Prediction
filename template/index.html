@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Prediction</title>
+    <link rel="stylesheet" href="/staticfiles/style.css">
+</head>
+<body>
+    <h1> Car Price Predictor </h1>
+
+    <form action="{{url_for('predict')}}" method="post" accept-charset="utf-8">
+        <label><b> Car Brand: </b></label>
+        <select name="car_brand" id="car_brand" required="1" onchange="Load_car_names(this.id, 'Car_Name')">
+            <option value="">Select Car Brand</option>
+            {% for brand in car_brands %} 
+                <option value="{{ brand }}">{{ brand }}</option>
+            {% endfor %}
+        </select> 
+        <br> <br>
+        <label><b> Car Model: </b></label>
+        <select name="Car_Name" id="Car_Name"  required="1" >
+            <option value="">Select Car Model</option>
+        </select>
+        <br> <br>
+        <label><b>Model Year: </b></label>
+        <select name="Model_Year" id="Model_Year"  required="1">
+            <option value="">Select Model Year</option>
+            {% for Model_Year in Model_Years %}
+                <option value="{{ Model_Year }}">{{ Model_Year }}</option>
+            {% endfor %}       
+        </select>
+        <br><br>
+        <label><b> Body Type: </b></label>
+        <select name="Body_type" id="Body_type"  required="1">
+            <option value="">Select Car Body Type</option>
+            <option value="4">luxury suv</option>
+            <option value="3">luxury sedan</option>
+            <option value="2">suv</option>
+            <option value="1">sedan</option>
+            <option value="0">hatchback</option>
+        </select>
+        <br><br>
+        <label><b> Transmission: </b></label>
+        <select name="Tranmission" id="Tranmission"  required="1" >
+            <option value="">Select Transmission Type</option>
+            <option value="1">Manual</option>
+            <option value="0">Automatic</option>
+        </select>
+        <br><br>
+        <label><b> Kms Driven: </b></label>
+        <input type="text" name = "Kms_Driven" placeholder="Enter Kms Driven" id="Kms_Driven" required="1">
+        <br><br>
+        <label><b> State: </b></label>
+        <select name="state" id="state"  required="1" onchange="Load_RTO(this.id, 'RTO')">
+            <option value="">Select State</option>
+            {% for state in states %}
+                <option value="{{ state }}">{{ state }}</option>
+            {% endfor %}  
+        </select>
+        <br><br>
+        <label><b> RTO: </b></label>
+        <select name="RTO" id="RTO"  required="1">
+            <option value="">Select RTO</option>
+        </select>
+        <br><br>
+        <label><b> Cruise Control: </b></label>
+        <select name="Cruise_control" id="Cruise_control" required="1">
+            <option value="">Select Option</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <br><br>
+        <label><b> Steering mounted Controls: </b></label>
+        <select name="Steering_mounted_controls" id="Steering_mounted_controls" required="1">
+            <option value="">Select Option</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <br>
+        <br>
+        <button type="submit" id="sub">Prediction</button>
+    </form>
+
+    <br>
+    <script>
+        function Load_car_names(brand_id, Car_Name_id)
+        {
+            var brand = document.getElementById(brand_id);
+            var Car_Name = document.getElementById(Car_Name_id);
+            Car_Name.value = "";
+            Car_Name.innerHTML = "";
+
+            {% for brand in car_brands %}
+                if(brand.value == "{{ brand }}")
+                {
+                    {% for model in car_names %}
+                        {% if brand in model %}
+
+                            var newOption = document.createElement("option")
+                            newOption.value ="{{ model }}";
+                            newOption.innerHTML = "{{ model }}";
+                            Car_Name.options.add(newOption);
+
+                        {% endif %}
+                    {% endfor %}
+                }
+            {% endfor %}
+        }
+
+        function Load_RTO(state_id, RTO_id)
+        {
+            var state = document.getElementById(state_id);
+            var RTO = document.getElementById(RTO_id);
+            RTO.value = "";
+            RTO.innerHTML = "";
+            {% for state in states %}
+                if(state.value == "{{ state }}")
+                {
+                    {% for RTO in RTOs %}
+                        {% if state in RTO %}
+                            var newOption = document.createElement("option")
+                            newOption.value ="{{ RTO }}";
+                            newOption.innerHTML = "{{ RTO }}";
+                            RTO.options.add(newOption);
+                        {% endif %}
+                    {% endfor %}
+                }
+            {% endfor %}
+        }
+    </script>
+<h2>
+    {{prediction_text}}
+</h2>
+</body>
+</html> 
