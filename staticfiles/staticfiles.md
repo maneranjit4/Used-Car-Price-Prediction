@@ -1,1 +1,1 @@
-containd css and image file
+folder contains css and image file
