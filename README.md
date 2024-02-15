@@ -7,3 +7,5 @@
 
 # For more details Read <a href = "cars24 final.pptx"> cars24 final ppt </a>
 # All preprocessing and code is given in <a href = "Cap_proj_Used_cars_price.ipynb"> Cap_proj_Used_cars_price </a>
+
+<iframe src='https://view.officeapps.live.com/op/embed.aspx?src=[cars24 final.pptx]' width='100%' height='600px' frameborder='0'>
